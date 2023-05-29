@@ -7,6 +7,5 @@ import com.liwei.web.category.service.SysCategoryService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SysCategoryServiceImpl extends ServiceImpl<SysCategoryMapper,
-        SysCategory> implements SysCategoryService {
+public class SysCategoryServiceImpl extends ServiceImpl<SysCategoryMapper, SysCategory> implements SysCategoryService {
 }
