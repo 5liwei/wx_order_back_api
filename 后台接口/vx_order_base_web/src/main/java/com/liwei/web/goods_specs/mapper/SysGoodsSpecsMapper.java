@@ -1,4 +1,5 @@
 package com.liwei.web.goods_specs.mapper;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.liwei.web.goods_specs.entity.SysGoodsSpecs;
 

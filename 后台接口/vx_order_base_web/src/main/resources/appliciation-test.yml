@@ -11,6 +11,11 @@ spring:
     username: root
     password: root
 
+#图片上传
+web:
+  uploadpath: D:/wx-order/images/ #图片上传的路径
+  load-path: file:D:///wx-order/images/ #图片访问、加载的路径
+
 #mybatis plus配置
 mybatis-plus:
   configuration:
