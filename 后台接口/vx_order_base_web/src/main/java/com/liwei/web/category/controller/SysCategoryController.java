@@ -6,11 +6,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liwei.utils.ResultUtils;
 import com.liwei.utils.ResultVo;
 import com.liwei.web.category.entity.ListParm;
+import com.liwei.web.category.entity.SelectType;
 import com.liwei.web.category.entity.SysCategory;
 import com.liwei.web.category.service.SysCategoryService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/category")
@@ -57,5 +62,21 @@ public class SysCategoryController {
                 .orderByAsc(SysCategory::getOrderNum);
         IPage<SysCategory> list = sysCategoryService.page(page, query);
         return ResultUtils.success("查询成功!", list);
+    }
+
+    //列表
+    @GetMapping("/getSelectList")
+    public ResultVo getSelectList() {
+        List<SysCategory> list = sysCategoryService.list();
+        List<SelectType> selectList = new ArrayList<>();
+        Optional.ofNullable(list).orElse(new ArrayList<>())
+                .stream()
+                .forEach(item -> {
+                    SelectType type = new SelectType();
+                    type.setLabel(item.getCategoryName());
+                    type.setValue(item.getCategoryId());
+                    selectList.add(type);
+                });
+        return ResultUtils.success("查询成功", selectList);
     }
 }
