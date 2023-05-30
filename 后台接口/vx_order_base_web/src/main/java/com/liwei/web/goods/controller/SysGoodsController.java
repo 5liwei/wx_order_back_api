@@ -21,10 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @Author java实战基地
- * @Version 2383404558
- */
+
 @RestController
 @RequestMapping("/api/goods")
 public class SysGoodsController {
