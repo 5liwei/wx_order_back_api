@@ -25,8 +25,8 @@ public class SysCategoryController {
 
     //新增
     @PostMapping
-    public ResultVo add(@RequestBody SysCategory sysCategory) {
-        if (sysCategoryService.save(sysCategory)) {
+    public ResultVo add(@RequestBody SysCategory sysCategory){
+        if(sysCategoryService.save(sysCategory)){
             return ResultUtils.success("新增成功!");
         }
         return ResultUtils.error("新增失败!");
@@ -34,8 +34,8 @@ public class SysCategoryController {
 
     //编辑
     @PutMapping
-    public ResultVo edit(@RequestBody SysCategory sysCategory) {
-        if (sysCategoryService.updateById(sysCategory)) {
+    public ResultVo edit(@RequestBody SysCategory sysCategory){
+        if(sysCategoryService.updateById(sysCategory)){
             return ResultUtils.success("编辑成功!");
         }
         return ResultUtils.error("编辑失败!");
@@ -43,8 +43,8 @@ public class SysCategoryController {
 
     //删除
     @DeleteMapping("/{categoryId}")
-    public ResultVo delete(@PathVariable("categoryId") Long categoryId) {
-        if (sysCategoryService.removeById(categoryId)) {
+    public ResultVo delete(@PathVariable("categoryId") Long categoryId){
+        if(sysCategoryService.removeById(categoryId)){
             return ResultUtils.success("删除成功!");
         }
         return ResultUtils.error("删除失败!");
@@ -52,31 +52,30 @@ public class SysCategoryController {
 
     //列表
     @GetMapping("/list")
-    public ResultVo list(ListParm listParm) {
-//构造分页对象
-        IPage<SysCategory> page = new Page<>
-                (listParm.getCurrentPage(), listParm.getPageSize());
-//构造查询条件
+    public ResultVo list(ListParm listParm){
+        //构造分页对象
+        IPage<SysCategory> page = new Page<>(listParm.getCurrentPage(),listParm.getPageSize());
+        //构造查询条件
         QueryWrapper<SysCategory> query = new QueryWrapper<>();
-        query.lambda().like(StringUtils.isNotEmpty(listParm.getCategoryName()), SysCategory::getCategoryName, listParm.getCategoryName())
+        query.lambda().like(StringUtils.isNotEmpty(listParm.getCategoryName()),SysCategory::getCategoryName,listParm.getCategoryName())
                 .orderByAsc(SysCategory::getOrderNum);
         IPage<SysCategory> list = sysCategoryService.page(page, query);
-        return ResultUtils.success("查询成功!", list);
+        return ResultUtils.success("查询成功!",list);
     }
-
     //列表
     @GetMapping("/getSelectList")
-    public ResultVo getSelectList() {
+    public ResultVo getSelectList(){
         List<SysCategory> list = sysCategoryService.list();
+        //组装为前端下拉选择器需要的数据格式
         List<SelectType> selectList = new ArrayList<>();
         Optional.ofNullable(list).orElse(new ArrayList<>())
                 .stream()
-                .forEach(item -> {
+                .forEach(item ->{
                     SelectType type = new SelectType();
                     type.setLabel(item.getCategoryName());
                     type.setValue(item.getCategoryId());
                     selectList.add(type);
                 });
-        return ResultUtils.success("查询成功", selectList);
+        return ResultUtils.success("查询成功!",selectList);
     }
 }

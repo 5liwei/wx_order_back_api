@@ -1,7 +1,5 @@
 package com.liwei.utils;
 
-import com.liwei.status.StatusCode;
-
 /**
  * 数据返回工具类
  */
