@@ -12,6 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/user")
 
@@ -49,10 +51,10 @@ public class SysUserController {
     //列表
     @GetMapping("/list")
     public ResultVo list(UserPageParm parm) {
-//构造分页
+        //构造分页
         IPage<SysUser> page = new Page<>(parm.getCurrentPage(),
                 parm.getPageSize());
-//构造查询条件
+        //构造查询条件
         QueryWrapper<SysUser> query = new QueryWrapper<>();
         query.lambda().like(StringUtils.isNotEmpty(parm.getName()),
                         SysUser::getName, parm.getName())
@@ -61,5 +63,20 @@ public class SysUserController {
                 .orderByAsc(SysUser::getName);
         IPage<SysUser> list = sysUserService.page(page, query);
         return ResultUtils.success("查询成功", list);
+    }
+
+    @PostMapping("/login")
+    public ResultVo login(@RequestBody Map<String,String> user) {
+        String account = user.get("account");
+        String password = user.get("password");
+        String type = user.get("type");
+        String msg= "用户或密码错误";
+        SysUser loginUser = sysUserService.login(account,password);
+        if(loginUser != null) {
+            return ResultUtils.success("登陆成功");
+        }else {
+            return ResultUtils.error(msg);
+        }
+
     }
 }

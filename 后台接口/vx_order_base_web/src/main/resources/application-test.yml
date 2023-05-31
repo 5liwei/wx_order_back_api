@@ -27,9 +27,9 @@ mybatis-plus:
 Wechat:
   Applets:
     # 小程序appID
-    appId:
+    appId: wxa0a5f3f81f1f2b3c
     # 小程序秘钥
-    appSecret:
+    appSecret: 9b4db07a2e318314e43a86969cba58a9
 
 #图片上传
 web:
